@@ -6,7 +6,11 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+chrono = { version = "0.4.38", features = ["serde"] }
 ciborium = "0.2.2"
+ecdsa = { version = "0.16.9", features = ["signing", "verifying", "serde", "pem"] }
+hex = "0.4.3"
+k256 = { version = "0.13.3", features = ["serde", "pem"] }
 serde = { version = "1.0.210", features = ["derive"] }
 sha256 = "1.5.0"
 uint = "0.10.0"
