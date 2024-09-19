@@ -1,18 +1,19 @@
-use k256::elliptic_curve::consts::U2;
-use crate::U256;
+use std::fmt::{Display, Formatter};
+
+use serde::{Deserialize, Serialize};
 use sha256::digest;
-use serde::Serialize;
 
-#[derive(Clone, Copy, Serialize)]
+use crate::U256;
+
+#[derive(Clone, Copy, Serialize, Deserialize, Debug, PartialEq, Eq, Hash)]
 pub struct Hash(U256);
-
 impl Hash {
     pub fn hash<T: serde::Serialize>(data: &T) -> Self {
         let mut serialized: Vec<u8> = vec![];
-        if let Err(e) = ciborium::into_writer(
-            data,
-            &mut serialized,
-        ) {
+
+        if let Err(e) =
+            ciborium::into_writer(data, &mut serialized)
+        {
             panic!(
                 "Failed to serialize data: {:?}. \
                 This should not happen",
@@ -34,13 +35,21 @@ impl Hash {
     pub fn zero() -> Self {
         Hash(U256::zero())
     }
+    pub fn as_bytes(&self) -> [u8; 32] {
+        let mut bytes: Vec<u8> = vec![0; 32];
+        self.0.to_little_endian(&mut bytes);
+        bytes.as_slice().try_into().unwrap()
+    }
+}
+
+impl Display for Hash {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:x}", self.0)
+    }
 }
 
 #[cfg(test)]
 mod test {
-
-    use crate::sha256::Hash;
-    use sha256::digest;
     #[test]
     fn hash_test() {
         // let input_data = "Hello world".to_string();
