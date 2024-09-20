@@ -65,6 +65,9 @@ impl PrivateKey {
     pub fn new_key() -> Self {
         PrivateKey(SigningKey::random(&mut rand::thread_rng()))
     }
+    pub fn public_key(&self) -> PublicKey {
+        PublicKey(self.0.verifying_key().clone())
+    }
 }
 
 
