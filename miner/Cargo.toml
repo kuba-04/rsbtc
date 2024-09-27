@@ -6,3 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+lib = { path = "../lib"}
+tokio = { version = "1.40.0", features = ["full"] }
+clap = { version = "4.5.18", features = ["derive"] }
+anyhow = "1.0.89"
+flume = "0.11.0"
