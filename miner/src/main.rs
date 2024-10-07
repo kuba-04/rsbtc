@@ -24,35 +24,6 @@ fn usage() -> ! {
 }
 #[tokio::main]
 async fn main() -> Result<()> {
-    // let address = match env::args().nth(1) {
-    //     Some(address) => address,
-    //     None => usage(),
-    // };
-    // let public_key_file = match env::args().nth(2) {
-    //     Some(public_key_file) => public_key_file,
-    //     None => usage(),
-    // };
-    // let Ok(public_key) = PublicKey::load_from_file(&public_key_file)
-    // else {
-    //     eprintln!(
-    //         "Error reading public key from file {}",
-    //         public_key_file
-    //     );
-    //     exit(1);
-    // };
-    // println!("Connecting to {address} to mine with {public_key:?}");
-    // let mut stream = match TcpStream::connect(&address).await {
-    //     Ok(stream) => stream,
-    //     Err(e) => {
-    //         eprintln!("Failed to connect to server: {}", e);
-    //         exit(1);
-    //     }
-    // };
-    // // ask node for work
-    // println!("requesting work from {address}");
-    // let message = Message::FetchTemplate(public_key);
-    // message.send_async(&mut stream).await.unwrap();
-
     let cli = Cli::parse();
     let public_key = PublicKey::load_from_file(&cli.public_key_file)
         .map_err(|e| {
